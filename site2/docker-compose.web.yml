@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  site2:
+    image: nginx:alpine
+    volumes:
+      - .:/usr/share/nginx/html/
+    labels:
+      - traefik.backend=site2
+      - traefik.frontend.rule=Host:site2.org
+    deploy:
+      replicas: 2
+    networks: 
+      - proxy
+
+networks:
+  proxy:
+    external:
+      name: proxy
