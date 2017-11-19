@@ -5,10 +5,11 @@ services:
     image: nginx:alpine
     volumes:
       - .:/usr/share/nginx/html/
-    labels:
-      - traefik.backend=site2
-      - traefik.frontend.rule=Host:site2.org
     deploy:
+      labels:
+        - traefik.port=80
+        - traefik.backend=site2
+        - traefik.frontend.rule=Host:site2.org
       replicas: 2
     networks: 
       - proxy

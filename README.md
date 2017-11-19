@@ -5,9 +5,9 @@ This repo is based on this [HAProxy-Docker-Sample](https://github.com/Franklin89
 After following the instructions you should be able to call in your browser:
 
 ```text
-site1.org     -> Routed to site1    container
-site1.org/sub -> Routed to site1sub container
-site2.org     -> Routed to site2    container
+site1.org     -> Routed to site1 container
+site1.org/sub/ -> Routed to site1sub container
+site2.org     -> Routed to site2 container
 ```
 
 ## Proxy Network

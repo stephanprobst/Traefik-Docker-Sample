@@ -3,15 +3,16 @@ version: '3'
 services:
   app:
     image: dockersamples/visualizer:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       placement:
         constraints:
           - node.role == manager
-    labels:
-      - traefik.backend=viz
-      - traefik.frontend.rule=Host:viz.org
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      labels:
+        - traefik.backend=viz
+        - traefik.port=8080
+        - traefik.frontend.rule=Host:viz.org
     networks: 
       - proxy
 
