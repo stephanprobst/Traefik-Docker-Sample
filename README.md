@@ -1,7 +1,5 @@
 # Traefik-Docker-Sample
 
-This repo is based on this [HAProxy-Docker-Sample](https://github.com/Franklin89/HAProxy-Docker-Sample) but uses Traefik.
-
 After following the instructions you should be able to call in your browser:
 
 ```text
@@ -66,7 +64,7 @@ Add the following lines.
 
 ## Stats page
 
-Traefik offers a nice stats page. Open your browser and navigate to `localhost:8080`.
+Traefik offers a nice stats page. Open your browser and navigate to `localhost/dashboard`.
 
 ## Scaling
 
@@ -77,3 +75,5 @@ docker service scale site1_site1=2
 docker service scale site2_site2=3
 docker service scale site1sub_site1sub=5
 ```
+
+This repo is based on this [HAProxy-Docker-Sample](https://github.com/Franklin89/HAProxy-Docker-Sample) but uses Traefik.

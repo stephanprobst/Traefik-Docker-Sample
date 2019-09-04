@@ -2,21 +2,27 @@ version: '3'
 
 services:
   proxy:
-    image: traefik
-    command: --web --docker --docker.swarmmode --docker.watch --docker.domain=docker.localhost --logLevel=DEBUG
+    image: traefik:2.0
+    command: 
+      --api
+      --providers.docker
+      --providers.docker.swarmMode=true
+      --providers.docker.network=proxy
+      --global.sendAnonymousUsage=false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /dev/null:/traefik.toml
     deploy:
       mode: global
       placement:
         constraints:
           - node.role == manager
+      labels:
+        - "traefik.http.routers.traefik-dashboard.rule=PathPrefix(`/dashboard`) || PathPrefix(`/api/entrypoints`) || PathPrefix(`/api/overview`) || PathPrefix(`/api/version`)"
+        - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
     networks: 
       - proxy
     ports:
       - 80:80
-      - 8080:8080 # stats page
 
 networks:
   proxy:

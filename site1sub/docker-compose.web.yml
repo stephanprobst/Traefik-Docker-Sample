@@ -7,9 +7,10 @@ services:
       - .:/usr/share/nginx/html/
     deploy:
       labels:
-        - traefik.port=80
-        - traefik.backend=site1sub
-        - "traefik.frontend.rule=Host:site1.org;PathPrefixStrip: /sub/"
+        - "traefik.http.routers.site1sub.rule=Host(`site1.org`) && PathPrefix(`/sub`)"
+        - "traefik.http.middlewares.site1sub.stripprefix.prefixes=/sub"
+        - "traefik.http.routers.site1sub.middlewares=site1sub@docker"
+        - traefik.http.services.site1sub.loadbalancer.server.port=80
     networks: 
       - proxy
 
