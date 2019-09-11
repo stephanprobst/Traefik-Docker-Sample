@@ -10,8 +10,10 @@ services:
         constraints:
           - node.role == manager
       labels:
-        - "traefik.http.routers.viz.rule=Host(`viz.org`)"
+        - traefik.enable=true
+        - "traefik.http.routers.viz.rule=Host(`viz.org`) || (Host(`viz.org`) && PathPrefix(`/apis`))"
         - traefik.http.services.viz.loadbalancer.server.port=8080
+        - traefik.http.services.viz.loadbalancer.passhostheader=true
     networks: 
       - proxy
 

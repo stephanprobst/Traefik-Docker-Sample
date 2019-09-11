@@ -4,10 +4,11 @@ services:
   proxy:
     image: traefik:2.0
     command: 
-      --api
+      --api.dashboard=true  
       --providers.docker
       --providers.docker.swarmMode=true
       --providers.docker.network=proxy
+      --providers.docker.exposedByDefault=false
       --global.sendAnonymousUsage=false
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -17,8 +18,10 @@ services:
         constraints:
           - node.role == manager
       labels:
-        - "traefik.http.routers.traefik-dashboard.rule=PathPrefix(`/dashboard`) || PathPrefix(`/api/entrypoints`) || PathPrefix(`/api/overview`) || PathPrefix(`/api/version`)"
-        - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=8080"
+        - traefik.enable=true
+        - "traefik.http.services.api.loadbalancer.server.port=8080"
+        - "traefik.http.routers.api.rule=PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+        - "traefik.http.routers.api.service=api@internal"
     networks: 
       - proxy
     ports:
